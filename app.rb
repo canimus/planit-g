@@ -21,3 +21,11 @@ get "/skills.json" do
 	collection = db["skills"]
 	collection.find().to_a.to_json
 end
+
+get "/certs.json" do	
+	content_type :json
+	conn = Mongo::Connection.new
+	db = conn["planit"]
+	collection = db["certifications"]
+	collection.find().to_a.to_json
+end
