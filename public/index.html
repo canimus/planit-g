@@ -1,0 +1,58 @@
+<html>
+<head>
+	<title>Planit Perth - Skill Matrix</title>
+	<script type="text/javascript" src="js/d3.v3.min.js"></script>
+</head>
+<body>
+	<h1 style="-moz-transform: rotate(-90deg);">Planit Skill Matrix</h1>
+	<div id="chart"></div>
+	<script>
+		var i = 5;
+		var w = 900;
+		var h = 900;
+		var svg = d3.select("#chart").append("svg");
+		svg.attr("width", w).attr("height", h);
+		svg.selectAll("circle").data(d3.range(i)).enter().append("circle")
+		.attr("cx", 450)
+		.attr("cy", 450)
+		.style("fill", "none")		
+		.style("stroke", "#555")
+		.style("stroke-width", "0.5px")
+		.attr("r", function(d) {return Math.pow(d+2,3)+100;});
+
+		// Name 
+		svg.append("text")
+		.attr("x", 450)
+		.attr("y", 450)
+		.attr("text-anchor", "middle")
+		.style("font-family", "Proxima Nova")
+		.text("Herminio Vazquez");
+
+		// Position
+		svg.append("text")
+		.attr("x", 450)
+		.attr("y", 475)
+		.attr("text-anchor", "middle")
+		.style("font-family", "Proxima Nova")
+		.style("font-weight", "bold")
+		.text("PTTC");
+
+		// Certifications
+		var arc = d3.svg.arc()
+		    .innerRadius(Math.pow(2,3)+100)
+		    .outerRadius(Math.pow(2,3)+102);
+		    //.startAngle(0) //convert from degs to radians
+		    
+
+		colors = d3.scale.category10();
+		svg.selectAll("path.certification").data(d3.range(10)).enter().append("path")
+		    .attr("d", arc.startAngle(0).endAngle(2*Math.PI*.1))
+		    .style("stroke", function(d,i) {return colors(i);})
+		    .style("stroke-width", "2px")
+		    .style("fill", "none")
+		    .attr("transform", function(d,i) { return "translate(450,450) rotate(0)"});
+		
+
+	</script>
+</body>
+</html>

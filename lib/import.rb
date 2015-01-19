@@ -23,11 +23,12 @@ def experience_calculator(form_entry)
   end
 end
 
-  CSV.open("perth_tech_skills.tsv", col_sep:"\t", headers:true) do |csv|
+  CSV.open("../imports/p4.tsv", col_sep:"\t", headers:true) do |csv|
       csv.each do |row|
         c.insert(
           _id: row[35],
           role: row[36],
+          name: row[37],
           entry_date: DateTime.parse(row[0]).to_time,
           certifications: row[1].nil? ? [] : row[1].split(",").map(&:strip),
           extra_cert: row[9].nil? ? [] : row[9].split(",").map(&:strip),

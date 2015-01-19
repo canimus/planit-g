@@ -1,0 +1,72 @@
+<html>
+<head>
+	<title>Planit Perth - Skill Matrix</title>
+	<script type="text/javascript" src="js/d3.v3.min.js"></script>
+	<style>
+		h1 {font-family: "Proxima Nova"; font-size: 22px; font-weight: bold;}
+		td,th {font-family: "Proxima Nova"; font-size: 12px; padding-left: 10px; padding-right: 5px; vertical-align: middle; line-height: 25px}
+		th.normal {text-align: left; vertical-align: bottom}
+		td {border-bottom: 1px solid #ccc;}
+		table {border-collapse: collapse; border-spacing: 0; margin-top: 120px;}
+		th.rotate {
+		  /* Something you can count on */
+		  height: 140px;
+		  white-space: nowrap;
+		}
+
+		th.rotate > div {
+		  transform: 
+		    /* Magic Numbers */
+		    translate(-5px, 51px)
+		    /* 45 is really 360 - 45 */
+		    rotate(315deg);
+		  width: 30px;
+		}
+		th.rotate > div > span {		  
+		  padding: 5px 10px;
+		}
+	</style>
+</head>
+<body>
+	<h1>Perth Skills Matrix - 2015</h1>
+	<table id="t1">
+		<thead>
+			<tr>				
+				<th class="normal">Position</th>
+				<th class="normal">Name</th>
+				<th class="normal">Email</th>
+				<th class="rotate"><div><span>ISTQB Foundation</span></div></th>
+				<th class="rotate"><div><span>ISTQB Adv. Test Analyst</span></div></th>
+				<th class="rotate"><div><span>ISTQB Adv. Tech Test Analyst</span></div></th>
+				<th class="rotate"><div><span>ISTQB Adv. Test Manager</span></div></th>
+				<th class="rotate"><div><span>ISTQB Expert Test Automation</span></div></th>
+				<th class="rotate"><div><span>ISTQB Expert Test Manager</span></div></th>
+				<th class="rotate"><div><span>ISTQB Mobile App Tester</span></div></th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<script>
+		var data = null;
+		d3.json("/skills.json", function(e,d) {
+			data = d;
+			console.log(data);
+
+			rows = d3.select("#t1").select("tbody").selectAll("tr");
+			row = rows.data(data).enter().append("tr")
+			row.append("td").text(function(d) {return d.role;})
+			row.append("td").text(function(d) {return d.name;})
+			row.append("td").text(function(d) {return d._id;})
+
+			row.append("td").text("x");
+			row.append("td").text("x");
+			row.append("td").text("x");
+			row.append("td").text("x");
+			row.append("td").text("x");
+			row.append("td").text("x");
+			row.append("td").text("-");
+		});
+
+	</script>
+</body>
+</html>
