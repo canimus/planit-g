@@ -16,7 +16,7 @@ db.skills.aggregate(
 );
 
 // Search for a particular entity per employee
-t = db.skills.find({languages: {$regex: /gherkin/i }}, {_id:1, role:1});
+t = 	db.skills.find({languages: {$regex: /gherkin/i }}, {_id:1, role:1});
 print(t);
 // Search with or clauses
 db.skills.find({

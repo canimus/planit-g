@@ -3,7 +3,8 @@
 	<title>Planit Perth - Skill Matrix</title>
 	<script type="text/javascript" src="js/d3.v3.min.js"></script>
 	<style>
-		h1 {font-family: "Proxima Nova"; font-size: 26px; font-weight: bold;}
+		body {margin-left: 40px;}
+		h1 {font-family: "Proxima Nova"; font-size: 42px; font-weight: bold; margin-left: 20px;}
 		text {font-family: "Proxima Nova"; font-size: 14px; font-weight: normal;}
 		line {stroke: #aaa; stroke-width: 0.8px;}
 	</style>
@@ -25,7 +26,7 @@
 		var colors = d3.scale.category20();
 
 		d3.json("/skills.json", function(e,d) {
-			data = d;			
+			data = d.sort(function(k,l) {return k.name > l.name});
 
 			svg = d3.select("#chart").append("svg");
 			svg.attr("width", width).attr("height", height);			
@@ -36,27 +37,42 @@
 				svg.append("circle").attr("cx", 5).attr("cy", function(o) { return (i+1)*25; }).attr("r", 5).style("fill", function(o,p) {return colors(i); });
 				svg.append("text").attr("x", 10).attr("y", function(o) { return (i+1)*25; }).text(function(k) {return d}).attr("class", "name");
 				svg.append("text").attr("x", 10).attr("y", function(o) { return (i+1)*25; }).text(function(k) {return data[i].role}).attr("class", "role");
-				svg.append("line").attr("x1", 0).attr("y1", function(o) { return (i+1)*25; }).attr("x2", 1100).attr("y2", function(o) { return (i+1)*25; })
+				svg.append("line").attr("x1", 0).attr("y1", function(o) { return (i+1)*25; }).attr("x2", 700).attr("y2", function(o) { return (i+1)*25; });				
+
 			});
-			d3.selectAll("text.name").attr("transform", "translate(20,100)");
-			d3.selectAll("text.role").attr("transform", "translate(200,100)");
-			d3.selectAll("circle").attr("transform", "translate(10,95)");
-			d3.selectAll("line").attr("transform", "translate(2,106)");
+			d3.selectAll("text.name").attr("transform", "translate(20,250)");
+			d3.selectAll("text.role").attr("transform", "translate(200,250)");
+			d3.selectAll("circle").attr("transform", "translate(10,245)");
+			d3.selectAll("line").attr("transform", "translate(2,256)");
+
+
+			d3.json("/certs.json", function(e,d) {
+				certs = d.map(function(p) {return p.name});
+
+				certs.forEach(function(p,i) {					
+
+					var t = svg.append("text");
+					t.attr("x", 100).attr("y", 10).text(p);
+					t.attr("transform", "translate("+((i+140)+(40*i))+",140) rotate(320 250 -40)");
+					svg.append("line").attr("x1", ((i+140)+(40*i))).attr("y1", 250).attr("x2", ((i+140)+(40*i))).attr("y2", 521).attr("transform", "translate(150,10)");
+				});	
+
+				names.sort().forEach(function(d,i) {
+					data[i].certifications.forEach(function(q,w) { 
+							if (certs.indexOf(q) >= 0) {
+								svg.append("circle").attr("cx", 5).attr("cy", function(o) { return (i+1)*25; }).attr("r", 5).style("fill", function(o,p) {return colors(i); })
+								.attr("transform", "translate("+(((certs.indexOf(q)+305)+(40*certs.indexOf(q))))+", 245)");
+							}
+					});
+				});
+
+			}); //json cert
 			
-		});
+			
 
-d3.json("/certs.json", function(e,d) {
-	certs = d.map(function(p) {return p.name});
-	certs.forEach(function(p,i) {
-		console.log(p);
-		svg.append("text")
-			.attr("x", function(o) { return (i*50); })
-			.attr("y", 10).text(function(k) {return p})
-			.attr("class", "cert")
-		   	.attr("text-anchor", "end");
-	});	
+		}); // json skills
 
-});
+		
 
 	</script>
 </body>

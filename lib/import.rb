@@ -23,7 +23,7 @@ def experience_calculator(form_entry)
   end
 end
 
-  CSV.open("../imports/p4.tsv", col_sep:"\t", headers:true) do |csv|
+  CSV.open("../sources/p4.tsv", col_sep:"\t", headers:true) do |csv|
       csv.each do |row|
         c.insert(
           _id: row[35],
@@ -44,27 +44,27 @@ end
           languages: row[12].nil? ? [] : row[12].split(",").map(&:strip),
           extra_languages: row[13].nil? ? [] : row[13].split(",").map(&:strip),
           industry_sectors: {
-            finance: experience_calculator(row[14]),
-            investment: experience_calculator(row[15]),
-            banking: experience_calculator(row[16]),
-            insurance: experience_calculator(row[17]),
-            water: experience_calculator(row[18]),
-            electricity: experience_calculator(row[19]),
-            oil: experience_calculator(row[20]),
-            gas: experience_calculator(row[21]),
-            mining: experience_calculator(row[22]),
-            energy: experience_calculator(row[23]),
-            telecommunications: experience_calculator(row[24]),
-            government: experience_calculator(row[25]),
-            gaming: experience_calculator(row[26]),
-            logistics: experience_calculator(row[27]),
-            health: experience_calculator(row[28]),
-            manufactoring: experience_calculator(row[29]),
-            retail: experience_calculator(row[30]),
-            automobile: experience_calculator(row[31]),
             aerospace: experience_calculator(row[32]),
+            automobile: experience_calculator(row[31]),
+            banking: experience_calculator(row[16]),
             commodities: experience_calculator(row[33]),
-            sports: experience_calculator(row[34])
+            electricity: experience_calculator(row[19]),
+            energy: experience_calculator(row[23]),
+            finance: experience_calculator(row[14]),
+            gaming: experience_calculator(row[26]),
+            gas: experience_calculator(row[21]),
+            government: experience_calculator(row[25]),
+            health: experience_calculator(row[28]),
+            insurance: experience_calculator(row[17]),
+            investment: experience_calculator(row[15]),
+            logistics: experience_calculator(row[27]),
+            manufactoring: experience_calculator(row[29]),
+            mining: experience_calculator(row[22]),
+            oil: experience_calculator(row[20]),
+            retail: experience_calculator(row[30]),
+            sports: experience_calculator(row[34]),
+            telecommunications: experience_calculator(row[24]),
+            water: experience_calculator(row[18])
           }
         )
     end
